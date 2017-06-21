@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Interest</th>
       <th>Code</th>
       <th>Teacher</th>
       <th colspan="3"></th>
@@ -16,6 +17,24 @@
     <% @courses.each do |course| %>
       <tr>
         <td class="td" id="td"><%= course.title %></td>
+        <td>
+          <% interest = current_person.interests.where(course: course).first %>
+          <% if interest %>
+            <button class="btn btn-link btn-like active" data-interest-id="<%= interest.id %>" data-course-id="<%= course.id %>">
+              <span class="glyphicon glyphicon-heart"></span>
+              <span class="interests-count">
+                <%= course.interests.count %>
+              </span>
+            </button>
+          <% else %>
+            <button class="btn btn-link btn-like" data-course-id="<%= course.id %>">
+              <span class="glyphicon glyphicon-heart"></span>
+              <span class="interests-count">
+                <%= course.interests.count %>
+              </span>
+            </button>
+          <% end %>
+        </td>
         <td><%= course.code %></td>
         <td><%= course.teacher %></td>
         <td><%= link_to 'Show', course %></td>
